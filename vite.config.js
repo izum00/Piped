@@ -79,5 +79,20 @@ export default defineConfig({
     build: {
         sourcemap: true,
         cssMinify: "lightningcss",
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    // モジュールが `locales` ディレクトリに含まれている場合
+                    if (id.includes('/src/locales/')) {
+                        return 'locales';
+                    }
+                    // モジュールが `utils` ディレクトリに含まれている場合
+                    if (id.includes('/src/utils/')) {
+                        return 'utils';
+                    }
+                    // その他の条件を追加可能
+                },
+            },
+        },
     },
 });
